@@ -1,0 +1,7 @@
+{
+  "name": "Lewis Mabe AI Assistant",
+  "description": "A smart fitness coaching assistant mirroring the voice and expertise of Lewis Mabe, featuring a glassmorphic Telegram-style interface.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
