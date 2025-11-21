@@ -20,9 +20,12 @@ export interface ChatSession {
   messages: Message[];
 }
 
+export type Theme = 'light' | 'dark';
+
 export interface ChatState {
   sessions: ChatSession[];
   currentSessionId: string | null;
   isSidebarOpen: boolean;
   isLoading: boolean;
+  theme: Theme;
 }

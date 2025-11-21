@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef, useState } from 'react';
-import { Message, Attachment } from '../types';
+import { Message, Attachment, Theme } from '../types';
 import { MessageBubble } from './MessageBubble';
 import { LOGO_URL } from '../constants';
 
@@ -9,7 +8,7 @@ interface ChatInterfaceProps {
   onSendMessage: (text: string, attachments: Attachment[]) => void;
   isLoading: boolean;
   onToggleSidebar: () => void;
-  onExportChat: () => void;
+  theme: Theme;
 }
 
 export const ChatInterface: React.FC<ChatInterfaceProps> = ({
@@ -17,7 +16,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   onSendMessage,
   isLoading,
   onToggleSidebar,
-  onExportChat
+  theme
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -27,6 +26,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+
+  const isDark = theme === 'dark';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -156,13 +157,13 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full relative bg-gradient-to-b from-brand-dark via-[#131C2D] to-brand-dark">
-      {/* Header */}
-      <header className="absolute top-0 left-0 right-0 h-16 glass-header z-30 flex items-center justify-between px-4">
+    <div className={`flex flex-col h-full relative ${isDark ? 'bg-gradient-to-b from-brand-dark via-[#131C2D] to-brand-dark' : 'bg-slate-50'}`}>
+      {/* Header with Yellow Shadow */}
+      <header className="absolute top-0 left-0 right-0 h-16 glass-header z-30 flex items-center justify-between px-4 shadow-[0_4px_30px_-5px_rgba(252,211,77,0.6)]">
         <div className="flex items-center gap-3">
           <button 
             onClick={onToggleSidebar}
-            className="md:hidden text-slate-300 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+            className={`md:hidden p-2 rounded-full transition-colors ${isDark ? 'text-slate-300 hover:text-white hover:bg-white/10' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200'}`}
           >
             <span className="material-symbols-rounded">menu</span>
           </button>
@@ -171,23 +172,10 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover" />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-white font-semibold text-lg tracking-tight">Lewis Mabe AI</h1>
-              <div className="text-xs text-brand-yellow flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-yellow animate-pulse"></span>
-                Online
-              </div>
+              <h1 className={`font-semibold text-lg tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>Lewis Mabe AI</h1>
             </div>
           </div>
         </div>
-
-        <button 
-          onClick={onExportChat}
-          className="text-slate-400 hover:text-brand-yellow p-2 rounded-lg hover:bg-white/5 transition-all flex items-center gap-2 text-sm"
-          title="Export Chat History"
-        >
-          <span className="material-symbols-rounded">download</span>
-          <span className="hidden sm:inline">Export</span>
-        </button>
       </header>
 
       {/* Messages Area */}
@@ -199,8 +187,8 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center mb-6 border border-brand-yellow/30 shadow-2xl overflow-hidden">
                  <img src={LOGO_URL} alt="Logo" className="w-full h-full object-cover opacity-90" />
                </div>
-               <h3 className="text-2xl font-bold text-white mb-2">Mabe Fitness AI</h3>
-               <p className="text-slate-400 max-w-md text-sm leading-relaxed">
+               <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Mabe Fitness AI</h3>
+               <p className={`max-w-md text-sm leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                  Strong, pain-free, sustainable. I'm here to help you train smarter.
                  Send me a message, upload a form video frame, or record a voice note.
                </p>
@@ -214,7 +202,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                    <button 
                     key={idx}
                     onClick={() => onSendMessage(prompt, [])}
-                    className="text-sm text-left p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-brand-yellow/30 transition-all text-slate-300 hover:text-brand-yellow"
+                    className={`text-sm text-left p-3 rounded-xl border transition-all ${
+                      isDark 
+                        ? 'bg-white/5 hover:bg-white/10 border-white/5 hover:border-brand-yellow/30 text-slate-300 hover:text-brand-yellow'
+                        : 'bg-white hover:bg-slate-50 border-slate-200 hover:border-brand-yellow/50 text-slate-600 hover:text-brand-dark'
+                    }`}
                    >
                      {prompt}
                    </button>
@@ -224,7 +216,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
            )}
 
            {messages.map((msg) => (
-             <MessageBubble key={msg.id} message={msg} />
+             <MessageBubble key={msg.id} message={msg} theme={theme} />
            ))}
            
            {isLoading && (
@@ -233,7 +225,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
                  <div className="w-10 h-10 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden shadow-lg flex-shrink-0">
                    <img src={LOGO_URL} alt="AI" className="w-full h-full object-cover" />
                  </div>
-                 <div className="bg-[#1E293B] px-4 py-3 rounded-2xl rounded-tl-none border border-white/5 flex items-center gap-1">
+                 <div className={`${isDark ? 'bg-[#1E293B] border-white/5' : 'bg-white border-slate-200'} px-4 py-3 rounded-2xl rounded-tl-none border flex items-center gap-1`}>
                    <div className="w-2 h-2 bg-brand-yellow rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                    <div className="w-2 h-2 bg-brand-yellow rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                    <div className="w-2 h-2 bg-brand-yellow rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -246,21 +238,21 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
       </div>
 
       {/* Input Area */}
-      <div className="p-4 md:p-6 glass-panel border-t border-white/5 bg-brand-dark/90 z-30">
+      <div className={`p-4 md:p-6 glass-panel border-t z-30 ${isDark ? 'border-white/5 bg-brand-dark/90' : 'border-slate-200 bg-slate-50/90'}`}>
         <div className="max-w-3xl mx-auto relative">
           
           {/* Pending Attachments */}
           {attachments.length > 0 && (
             <div className="flex gap-2 mb-2 overflow-x-auto pb-2">
               {attachments.map((att, idx) => (
-                <div key={idx} className="relative group flex-shrink-0">
-                  <div className="w-16 h-16 rounded-lg overflow-hidden border border-white/20 bg-black/50 flex items-center justify-center">
+                <div key={idx} className={`relative group flex-shrink-0`}>
+                  <div className={`w-16 h-16 rounded-lg overflow-hidden border flex items-center justify-center ${isDark ? 'border-white/20 bg-black/50' : 'border-slate-300 bg-white'}`}>
                     {att.type === 'image' ? (
                       <img src={`data:${att.mimeType};base64,${att.data}`} className="w-full h-full object-cover" alt="upload" />
                     ) : att.type === 'audio' ? (
                       <span className="material-symbols-rounded text-brand-yellow">mic</span>
                     ) : (
-                      <span className="material-symbols-rounded text-slate-300">description</span>
+                      <span className="material-symbols-rounded text-slate-400">description</span>
                     )}
                   </div>
                   <button 
@@ -274,7 +266,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
             </div>
           )}
 
-          <div className="relative flex items-end gap-2 bg-[#1E293B] rounded-2xl p-2 border border-white/10 focus-within:border-brand-yellow/50 transition-colors shadow-lg">
+          <div className={`relative flex items-end gap-2 rounded-2xl p-2 border transition-colors shadow-lg ${
+            isDark 
+              ? 'bg-[#1E293B] border-white/10 focus-within:border-brand-yellow/50' 
+              : 'bg-white border-slate-200 focus-within:border-brand-yellow/50'
+          }`}>
             <input 
               type="file" 
               ref={fileInputRef}
@@ -285,7 +281,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
             
             <button 
               onClick={() => fileInputRef.current?.click()}
-              className="p-2.5 text-slate-400 hover:text-brand-yellow transition-colors rounded-xl hover:bg-white/5"
+              className={`p-2.5 transition-colors rounded-xl ${isDark ? 'text-slate-400 hover:text-brand-yellow hover:bg-white/5' : 'text-slate-400 hover:text-brand-dark hover:bg-slate-100'}`}
               title="Attach File"
             >
               <span className="material-symbols-rounded">attach_file</span>
@@ -293,7 +289,11 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
             
             <button 
               onClick={toggleRecording}
-              className={`p-2.5 transition-all rounded-xl hover:bg-white/5 ${isRecording ? 'text-red-500 bg-red-500/10 animate-pulse' : 'text-slate-400 hover:text-brand-yellow'}`}
+              className={`p-2.5 transition-all rounded-xl ${
+                isRecording 
+                  ? 'text-red-500 bg-red-500/10 animate-pulse' 
+                  : (isDark ? 'text-slate-400 hover:text-brand-yellow hover:bg-white/5' : 'text-slate-400 hover:text-brand-dark hover:bg-slate-100')
+              }`}
               title={isRecording ? "Stop Recording" : "Start Recording"}
             >
               <span className="material-symbols-rounded">{isRecording ? 'stop_circle' : 'mic'}</span>
@@ -306,7 +306,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               onChange={handleInput}
               onKeyDown={handleKeyDown}
               placeholder={isRecording ? "Listening..." : "Message Lewis..."}
-              className="w-full bg-transparent text-white placeholder-slate-500 resize-none py-3 px-2 focus:outline-none max-h-[120px] scrollbar-thin"
+              className={`w-full bg-transparent resize-none py-3 px-2 focus:outline-none max-h-[120px] scrollbar-thin ${isDark ? 'text-white placeholder-slate-500' : 'text-slate-800 placeholder-slate-400'}`}
               style={{ minHeight: '44px' }}
             />
             
@@ -316,14 +316,14 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
               className={`p-2.5 rounded-xl transition-all duration-200 flex-shrink-0 ${
                 (inputValue.trim() || attachments.length > 0) && !isLoading
                   ? 'bg-brand-yellow text-brand-dark hover:bg-yellow-300 shadow-lg shadow-yellow-900/20 transform hover:scale-105' 
-                  : 'bg-slate-700 text-slate-500 cursor-not-allowed'
+                  : (isDark ? 'bg-slate-700 text-slate-500 cursor-not-allowed' : 'bg-slate-200 text-slate-400 cursor-not-allowed')
               }`}
             >
               <span className="material-symbols-rounded">send</span>
             </button>
           </div>
           <div className="text-center mt-2">
-             <p className="text-[10px] text-slate-500">
+             <p className={`text-[10px] ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
                Coach Lewis AI. Click Mic to speak. Attach images/files for analysis.
              </p>
           </div>

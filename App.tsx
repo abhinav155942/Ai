@@ -2,17 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Sidebar } from './components/Sidebar';
 import { ChatInterface } from './components/ChatInterface';
-import { ChatSession, Message, Attachment } from './types';
+import { ChatSession, Message, Attachment, Theme } from './types';
 import { sendMessageToGemini } from './services/geminiService';
 import { DEFAULT_GREETING } from './constants';
 
 const STORAGE_KEY = 'lewis_ai_sessions';
+const THEME_KEY = 'lewis_ai_theme';
 
 function App() {
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [currentSessionId, setCurrentSessionId] = useState<string | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [theme, setTheme] = useState<Theme>('dark');
+
+  // Load theme
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY) as Theme | null;
+    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(THEME_KEY, theme);
+    if (theme === 'light') {
+        document.body.classList.add('light-mode');
+    } else {
+        document.body.classList.remove('light-mode');
+    }
+  }, [theme]);
 
   // Load from local storage on mount
   useEffect(() => {
@@ -141,12 +160,16 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   const activeSession = getCurrentSession();
 
   return (
-    <div className="flex h-screen overflow-hidden bg-brand-dark text-white font-sans selection:bg-brand-yellow selection:text-brand-dark">
+    <div className={`flex h-screen overflow-hidden font-sans selection:bg-brand-yellow selection:text-brand-dark ${theme === 'dark' ? 'bg-brand-dark text-white' : 'bg-slate-50 text-slate-900'}`}>
       <Sidebar 
         isOpen={isSidebarOpen} 
         onClose={() => setIsSidebarOpen(false)}
@@ -154,6 +177,9 @@ function App() {
         currentSessionId={currentSessionId}
         onSelectSession={setCurrentSessionId}
         onNewChat={createNewSession}
+        onExportChat={handleExportChat}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
       
       <main className="flex-1 flex flex-col min-w-0 relative">
@@ -163,7 +189,7 @@ function App() {
             onSendMessage={handleSendMessage}
             isLoading={isLoading}
             onToggleSidebar={toggleSidebar}
-            onExportChat={handleExportChat}
+            theme={theme}
           />
         ) : (
           <div className="flex-1 flex items-center justify-center">

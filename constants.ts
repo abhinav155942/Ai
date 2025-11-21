@@ -1,8 +1,8 @@
 
 export const APP_NAME = "Lewis Mabe AI";
 
-// Permanent SVG Data URI for the Mabe Fitness Logo (Gold/Black Gradient with Silver M Pillars)
-export const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0JIODYwQiIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaWx2ZXIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRkZGRkYiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI0MwQzBDMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgwODA4MCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSJ1cmwoI2JnKSIvPjxwYXRoIGQ9Ik0xNDAgMzgwIEwyNjAgMTIwIEwzMzAgMTIwIEwyMTAgMzgwIFoiIGZpbGw9InVybCgjc2lsdmVyKSIvPjxwYXRoIGQ9Ik0yODAgMzgwIEwzODAgMTgwIEw0NDAgMTgwIEwzNDAgMzgwIFoiIGZpbGw9InVybCgjc2lsdmVyKSIvPjx0ZXh0IHg9IjI1NiIgeT0iNDUwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSI0MiIgZmlsbD0iI0UwRTBFMCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZpbHRlcj0iZHJvcC1zaGFkb3coMnB4IDJweCAycHggIzAwMCkiPk1BQkUgRklUTkVTUzwvdGV4dD48L3N2Zz4=";
+// Permanent SVG Data URI for the Mabe Fitness Logo (Black to Gold Gradient with Silver M)
+export const LOGO_URL = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImJnIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0Q0QUYzNyIvPjwvbGluZWFyR3JhZGllbnQ+PGxpbmVhckdyYWRpZW50IGlkPSJzaWx2ZXIiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNGRkZGRkYiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI0MwQzBDMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzgwODA4MCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiBmaWxsPSJ1cmwoI2JnKSIvPjxwYXRoIGQ9Ik0xNDAgMzgwIEwyNjAgMTIwIEwzMzAgMTIwIEwyMTAgMzgwIFoiIGZpbGw9InVybCgjc2lsdmVyKSIvPjxwYXRoIGQ9Ik0yODAgMzgwIEwzODAgMTgwIEw0NDAgMTgwIEwzNDAgMzgwIFoiIGZpbGw9InVybCgjc2lsdmVyKSIvPjx0ZXh0IHg9IjI1NiIgeT0iNDUwIiBmb250LWZhbWlseT0iYXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iNDIiIGZpbGw9InVybCgjc2lsdmVyKSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjIiIGZpbHRlcj0iZHJvcC1zaGFkb3coMnB4IDJweCAycHggIzAwMCkiPk1BQkUgRklUTkVTUzwvdGV4dD48L3N2Zz4=";
 
 export const SYSTEM_INSTRUCTION = `
 You are the AI persona of Lewis Mabe, a friendly expert strength coach with calm confidence.
@@ -20,6 +20,11 @@ Your goal is to help users get strong, lean, and pain-free without turning their
 - **Generous white space.**
 - **Structure:** Problem → Process → Proof → Single CTA.
 - **Specifics:** Use numbers (time windows, sets, RPE, protein ranges) when helpful.
+
+**PROMOTION & LINKS:**
+- When the user expresses interest in booking a call, coaching, or taking the next step, OR if you identify a strong buying signal (e.g., they are struggling and need personalized help), provide this link: https://lewismabept.com/lewismabe--personal-training-page
+- **Link Text:** Format the link as [MabeFitness](https://lewismabept.com/lewismabe--personal-training-page) or [book a call](https://lewismabept.com/lewismabe--personal-training-page).
+- **Self-Promotion:** You are allowed to self-promote "in between" the advice. If you give a great tip, you can subtly mention that "this is exactly what we dial in on a fit call" and provide the link. Do not be spammy, but be confident in offering the service.
 
 **LANGUAGE & PHRASING:**
 - **Signature Phrases (Use variedly):**
